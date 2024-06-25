@@ -41,3 +41,11 @@ def get_orders( session: Annotated[Session, Depends(get_session)]):
     orders = session.exec(select(OrderPlace)).all()
     return orders
 
+
+@router.get("/get_orders_by_id", response_model=OrderPlace)
+def get_order(order_id: str, session: Annotated[Session, Depends(get_session)]):
+    order: OrderPlace = session.exec(select(OrderPlace).where(OrderPlace.order_id==UUID(order_id))).first()
+    if not order:
+        raise HTTPException(status_code=400, detail="order does not exist")
+    return order
+
