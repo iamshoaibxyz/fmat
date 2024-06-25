@@ -23,6 +23,7 @@ from sqlmodel import Field, SQLModel, Session
 DATABASE_URL="postgresql://shoaib:mypassword@postgresCont:5432/mydatabase"
 connection_str = str(DATABASE_URL).replace("postgresql", "postgresql+psycopg")
 engine = create_engine(connection_str)
+
 # oauth2_scheme = OAuth2PasswordBearer(tokenUrl="http://127.0.0.1:8002/auth/login")
 
 # def get_session():
@@ -130,27 +131,6 @@ async def create_checkout_session(order_id: str):
 #         return {"url": checkout_session.url, "products": products}
 #     except Exception as e:
 #         raise HTTPException(status_code=400, detail=str(e))
-
-
-# @app.post('/create-checkout-session')
-# def create_checkout_session():
-#     try:
-#         checkout_session = stripe.checkout.Session.create(
-#             line_items=[
-#                 {
-#                     # Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-#                      'price': 'price_1PShL1If22jmWnXxW8BRw0jI',
-#                     'quantity': 1,
-#                 },
-#             ],
-#             mode='subscription',
-#             success_url=YOUR_DOMAIN + '/success.html',
-#             cancel_url=YOUR_DOMAIN + '/cancel.html',
-#         )
-#         return {"url": checkout_session.url}
-#     except Exception as e:
-#         raise HTTPException(status_code=400, detail=str(e))
-
 
 if __name__ == "__main__":
     import uvicorn
