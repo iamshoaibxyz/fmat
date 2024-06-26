@@ -43,6 +43,16 @@ services:
       - smtp-service
       - broker
 
+  mail:
+    build:
+      context: ./mail
+      dockerfile: Dockerfile
+    container_name: mail
+    ports:
+      - "8005:8005"
+    volumes:
+      - ./mail:/code
+
   smtp-service:
     image: axllent/mailpit
     restart: unless-stopped
@@ -50,7 +60,7 @@ services:
     ports:
       - "8025:8025"
       - "1025:1025"
-
+    
   postgres_db:
     image: postgres:latest
     restart: always

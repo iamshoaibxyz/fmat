@@ -5,6 +5,9 @@ from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes.order import router as order_router
 from app.routes.product import router as product_router
+from ssl import create_default_context
+from email.mime.text import MIMEText
+from smtplib import SMTP
 
 app: FastAPI = FastAPI(lifespan=lifespan, title="Basic Mart", servers=[{
     "url": "http://127.0.0.1:8000",
@@ -22,8 +25,8 @@ app.add_middleware(
 )
 
 @app.get("/")
-def root(token: Annotated[dict, Depends(oauth2_scheme) ]):
-    return {"Message":"Mart API Sourcecode", "token":token}
+def root():
+    return {"Message":"Mart API Sourcecode"}
 
 app.include_router(product_router)
 app.include_router(order_router)
